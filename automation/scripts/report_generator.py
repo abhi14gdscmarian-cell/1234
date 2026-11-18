@@ -10,12 +10,27 @@ def fmt(seconds):
     return f"{s // 3600}h {s % 3600 // 60:02d}m {s % 60:02d}s"
 
 
+
 def main(out="automation"):
-    res = json.loads((Path(out) / "results" / "results.json").read_text(encoding="utf-8"))
+    results_file = Path(out) / "results" / "results.json"
+
+    if not results_file.exists():
+        print(
+            f"WARNING: Regression results not available: {results_file}"
+        )
+        print(
+            "The regression stage may not have started or may have failed."
+        )
+        return 0
+
+    res = json.loads(results_file.read_text(encoding="utf-8"))
+
     rep = Path(out) / "reports"
     rep.mkdir(parents=True, exist_ok=True)
+
     cfgs = res["configurations"]
     passed = sum(1 for c in cfgs if c["status"] == "PASS")
+
 
     txt = [f"HARDWARE REGRESSION: {res['overall']}  ({passed}/{len(cfgs)} configurations passed)",
            f"Started {res['started']}  Finished {res.get('finished', '?')}",
