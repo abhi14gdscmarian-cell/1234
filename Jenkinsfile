@@ -22,11 +22,11 @@ pipeline {
 
     environment {
         // Replace these paths with the actual paths on the Jenkins Windows agent.
-        FP_EXPRESS_BIN = 'C:\\Microchip\\Libero_SoC_v2024.2\\Designer\\bin'
+        FP_EXPRESS_BIN = 'C:\\Microchip\\Program_Debug_v2024.2\\Program_Debug_Tool\\bin'
         RISCV_BIN = 'C:\\Microchip\\SoftConsole-v2022.2-RISC-V-747\\riscv-unknown-elf-gcc\\bin'
         OPENOCD_BIN = 'C:\\Microchip\\SoftConsole-v2022.2-RISC-V-747\\openocd\\bin'
         OPENOCD_SCRIPTS = 'C:\\Microchip\\SoftConsole-v2022.2-RISC-V-747\\openocd\\share\\openocd\\scripts'
-        GDB_ARCH = 'riscv:rv32'  // Keep consistent with the ELF architecture; change to riscv:rv64 if required.
+        GDB_ARCH = 'riscv:rv64'  // Keep consistent with the ELF architecture; change to riscv:rv64 if required.
         PYTHONUNBUFFERED = '1'
         PIP_DISABLE_PIP_VERSION_CHECK = '1'
     }
