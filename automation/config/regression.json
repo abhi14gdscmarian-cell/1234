@@ -1,0 +1,51 @@
+{
+    "uart": {
+        "port": "COM5",
+        "baudrate": 115200,
+        "bytesize": 8,
+        "parity": "N",
+        "stopbits": 1
+    },
+    "flash": {
+        "_comment": "EDIT THESE TWO COMMANDS to match your tools. {rtl_job} and {elf} are substituted with absolute paths. FPExpress runs the Tcl script automation/tools/program_job.tcl (reads env var JOB_FILE).",
+        "rtl_command": "\"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Program Debug v2024.2\" SCRIPT:automation\\tools\\program_job.tcl SCRIPT_ARGS:\"{rtl_job}\"",
+        "rtl_success_regex": "Chain programming finished successfully|PASSED|Executing action PROGRAM PASSED",
+        "rtl_timeout_s": 900,
+        "elf_command": "openocd -f automation/tools/board.cfg -c \"program {elf} verify reset exit\"",
+        "elf_success_regex": "Verified OK|verified",
+        "elf_timeout_s": 600,
+        "retries": 1,
+        "settle_after_flash_s": 3
+    },
+    "clean_paths": [
+        "automation/work/*"
+    ],
+    "continue_on_failure": false,
+    "configurations": [
+        {
+            "name": "RTL_JOB_1",
+            "rtl_job": "rtl/1.job",
+            "elf": "firmware/1.elf",
+            "enabled": true
+        },
+        {
+            "name": "RTL_JOB_2",
+            "rtl_job": "rtl/2.job",
+            "elf": "firmware/2.elf",
+            "enabled": true
+        },
+        {
+            "name": "RTL_JOB_3",
+            "rtl_job": "rtl/3.job",
+            "elf": "firmware/3.elf",
+            "enabled": true
+        },
+        {
+            "name": "RTL_JOB_4",
+            "rtl_job": "rtl/4.job",
+            "elf": "firmware/4.elf",
+            "enabled": true
+        }
+    ],
+    "print_log_after_each_config": true
+}

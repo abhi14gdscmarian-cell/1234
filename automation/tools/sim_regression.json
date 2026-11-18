@@ -1,0 +1,51 @@
+{
+  "uart": {
+    "port": "COM5",
+    "baudrate": 115200,
+    "bytesize": 8,
+    "parity": "N",
+    "stopbits": 1
+  },
+  "flash": {
+    "_comment": "EDIT THESE TWO COMMANDS to match your tools. {rtl_job} and {elf} are substituted with absolute paths. FPExpress runs the Tcl script automation/tools/program_job.tcl (reads env var JOB_FILE).",
+    "rtl_command": "echo Executing action PROGRAM PASSED for {rtl_job}",
+    "rtl_success_regex": "PASSED",
+    "rtl_timeout_s": 900,
+    "elf_command": "echo Verified OK {elf}",
+    "elf_success_regex": "Verified OK",
+    "elf_timeout_s": 600,
+    "retries": 0,
+    "settle_after_flash_s": 0
+  },
+  "clean_paths": [
+    "automation/work/*"
+  ],
+  "continue_on_failure": false,
+  "configurations": [
+    {
+      "name": "RTL_JOB_1",
+      "rtl_job": "rtl/RTL_JOB_1.job",
+      "elf": "firmware/FIRMWARE_1.elf",
+      "enabled": true
+    },
+    {
+      "name": "RTL_JOB_2",
+      "rtl_job": "rtl/RTL_JOB_2.job",
+      "elf": "firmware/FIRMWARE_2.elf",
+      "enabled": true
+    },
+    {
+      "name": "RTL_JOB_3",
+      "rtl_job": "rtl/RTL_JOB_3.job",
+      "elf": "firmware/FIRMWARE_3.elf",
+      "enabled": true
+    },
+    {
+      "name": "RTL_JOB_4",
+      "rtl_job": "rtl/RTL_JOB_4.job",
+      "elf": "firmware/FIRMWARE_4.elf",
+      "enabled": true
+    }
+  ],
+  "print_log_after_each_config": true
+}

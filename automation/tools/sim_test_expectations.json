@@ -1,0 +1,25 @@
+{
+  "_comment": "The firmware runs its tests by itself after reset. Markers are Python regexes matched against the UART stream. 'steps' are the checkpoints that must appear IN THIS ORDER; 'completion_marker' means the whole run is finished. Replace with the exact text your firmware prints.",
+  "boot_timeout_s": 5,
+  "total_timeout_s": 10,
+  "step_timeout_s": 3,
+  "fail_marker": "RESULT:\\s*FAIL|TEST FAILED|ASSERT|HARD ?FAULT",
+  "completion_marker": "ALL TESTS COMPLETED",
+  "steps": [
+    {
+      "name": "SPI_TEST",
+      "marker": "SPI TEST COMPLETED.*?RESULT:\\s*PASS",
+      "timeout_s": 3
+    },
+    {
+      "name": "UART_TEST",
+      "marker": "UART TEST COMPLETED.*?RESULT:\\s*PASS",
+      "timeout_s": 3
+    },
+    {
+      "name": "CLOCK_TEST",
+      "marker": "CLOCK TEST COMPLETED.*?RESULT:\\s*PASS",
+      "timeout_s": 3
+    }
+  ]
+}
