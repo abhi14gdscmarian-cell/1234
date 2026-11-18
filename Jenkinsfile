@@ -88,28 +88,55 @@ pipeline {
             }
         }
 
-        stage('Validate Project Files') {
-            steps {
-                bat '''
-                    @echo off
-                    if not exist automation\\scripts\\regression_controller.py exit /b 1
-                    if not exist automation\\scripts\\flash_controller.py exit /b 1
-                    if not exist automation\\config\\regression.json exit /b 1
-                    if not exist automation\\config\\test_expectations.json exit /b 1
-                    if not exist automation\\tools\\program_job.tcl exit /b 1
-                    if not exist automation\\tools\\board.cfg exit /b 1
-                    if not exist automation\\tools\\program_elf_gdb.ps1 exit /b 1
+        
+stage('Validate Project Files') {
+    steps {
+        bat '''
+            @echo off
+            setlocal EnableExtensions
+            set "FAILED=0"
 
-                    for %%F in (rtl\\1.job rtl\\2.job rtl\\3.job firmware\\1.elf firmware\\2.elf firmware\\3.elf) do (
-                        if not exist "%%F" (
-                            echo ERROR: Required file missing: %%F
-                            exit /b 1
-                        )
-                    )
-                    echo Project validation completed.
-                '''
-            }
-        }
+            echo ==========================================
+            echo POLARFIRE PROJECT FILE VALIDATION
+            echo ==========================================
+
+            for %%F in (
+                automation\\scripts\\regression_controller.py
+                automation\\scripts\\flash_controller.py
+                automation\\config\\regression.json
+                automation\\config\\test_expectations.json
+                automation\\tools\\program_job.tcl
+                automation\\tools\\board.cfg
+                automation\\tools\\program_elf_gdb.ps1
+                rtl\\1.job
+                rtl\\2.job
+                rtl\\3.job
+                firmware\\1.elf
+                firmware\\2.elf
+                firmware\\3.elf
+            ) do (
+                if exist "%%F" (
+                    echo [OK] %%F
+                ) else (
+                    echo [MISSING] %%F
+                    set "FAILED=1"
+                )
+            )
+
+            echo.
+            echo ==========================================
+
+            if "%FAILED%"=="1" (
+                echo VALIDATION FAILED
+                exit /b 1
+            )
+
+            echo VALIDATION PASSED
+            exit /b 0
+        '''
+    }
+}
+
 
         stage('Clean Generated Files') {
             steps {
