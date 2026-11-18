@@ -24,26 +24,20 @@
   "configurations": [
     {
       "name": "RTL_JOB_1",
-      "rtl_job": "rtl/RTL_JOB_1.job",
-      "elf": "firmware/FIRMWARE_1.elf",
+      "rtl_job": "rtl/1.job",
+      "elf": "firmware/1.elf",
       "enabled": true
     },
     {
       "name": "RTL_JOB_2",
-      "rtl_job": "rtl/RTL_JOB_2.job",
-      "elf": "firmware/FIRMWARE_2.elf",
+      "rtl_job": "rtl/2.job",
+      "elf": "firmware/2.elf",
       "enabled": true
     },
     {
       "name": "RTL_JOB_3",
-      "rtl_job": "rtl/RTL_JOB_3.job",
-      "elf": "firmware/FIRMWARE_3.elf",
-      "enabled": true
-    },
-    {
-      "name": "RTL_JOB_4",
-      "rtl_job": "rtl/RTL_JOB_4.job",
-      "elf": "firmware/FIRMWARE_4.elf",
+      "rtl_job": "rtl/3.job",
+      "elf": "firmware/3.elf",
       "enabled": true
     }
   ],

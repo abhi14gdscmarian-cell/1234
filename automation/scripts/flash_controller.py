@@ -2,6 +2,7 @@
 import re
 import subprocess
 import time
+import os
 from pathlib import Path
 
 
@@ -55,7 +56,13 @@ def flash_rtl(job_file, flash_cfg, logger):
     job = Path(job_file).resolve()
     if not job.is_file():
         raise FlashError(f"RTL job file not found: {job}")
-    cmd = flash_cfg["rtl_command"].replace("{rtl_job}", str(job))
+    cmd = flash_cfg["rtl_command"].format(
+        rtl_job=str(job),
+        fpexpress=os.environ.get("FP_EXPRESS_EXE", ""),
+        tcl_script=str(Path("automation/tools/program_job.tcl").resolve()),
+        flash_log=str((Path("automation/logs") / "flashpro_express.log").resolve()),
+        workspace=str(Path.cwd())
+    )
     _with_retries(lambda: _run(cmd, flash_cfg.get("rtl_timeout_s", 900), flash_cfg.get("rtl_success_regex"),
                                logger, "RTL programming"),
                   flash_cfg.get("retries", 1), logger, "RTL programming")
@@ -66,7 +73,12 @@ def flash_firmware(elf_file, flash_cfg, logger):
     elf = Path(elf_file).resolve()
     if not elf.is_file():
         raise FlashError(f"firmware ELF not found: {elf}")
-    cmd = flash_cfg["elf_command"].replace("{elf}", str(elf).replace("\\", "/"))
+    cmd = flash_cfg["elf_command"].format(
+        elf=str(elf).replace("\\\\", "/"),
+        openocd=os.environ.get("OPENOCD_EXE", ""),
+        openocd_scripts=os.environ.get("OPENOCD_SCRIPTS", ""),
+        device=os.environ.get("DEVICE", "MPFS")
+    )
     _with_retries(lambda: _run(cmd, flash_cfg.get("elf_timeout_s", 600), flash_cfg.get("elf_success_regex"),
                                logger, "Firmware programming"),
                   flash_cfg.get("retries", 1), logger, "Firmware programming")

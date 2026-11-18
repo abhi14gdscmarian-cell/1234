@@ -63,7 +63,7 @@ def open_transport(cfg_uart, rtl_name, simulate):
         from sim_board import SimSerial
         return SimSerial(rtl_name)
     import serial
-    return serial.Serial(port=cfg_uart["port"], baudrate=cfg_uart["baudrate"],
+    return serial.Serial(port=os.environ.get("UART_PORT", cfg_uart["port"]), baudrate=cfg_uart["baudrate"],
                          bytesize=cfg_uart.get("bytesize", 8), parity=cfg_uart.get("parity", "N"),
                          stopbits=cfg_uart.get("stopbits", 1), timeout=0.2)
 
